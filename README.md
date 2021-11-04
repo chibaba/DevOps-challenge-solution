@@ -36,15 +36,15 @@ Your main goal is to create the infrastructure code to automate all the infrastr
 
 ## Network configuration 
 Using the operating system firewall (e.g. iptables, ufw, etc): 
-1) Load-balancer 
-  a) Accept SSH connections from any IP address 
-  b) Accept requests from any IP address via port 80 
-2) Database 
-  a) Accept SSH connections from any IP address 
-  b) Accept requests from the microservice IP address 
-3) Microservice 
-  a) Accept SSH connections from any IP address 
-  b) Accept requests from the load-balancer IP addres
+1) Load-balancer  
+  a) Accept SSH connections from any IP address  
+  b) Accept requests from any IP address via port 80  
+2) Database  
+  a) Accept SSH connections from any IP address  
+  b) Accept requests from the microservice IP address  
+3) Microservice  
+  a) Accept SSH connections from any IP address  
+  b) Accept requests from the load-balancer IP address  
 
 ## Deliverables
 - A GitHub public git repository with all the code for the development of this project 

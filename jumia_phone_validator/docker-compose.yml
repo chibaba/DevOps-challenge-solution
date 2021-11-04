@@ -1,0 +1,11 @@
+version: '2'
+services:
+    backend:
+         image: mohamedaly89/jumia-phone-number-validator:validator-backend-image
+         ports:
+           - "8080:8080"
+       
+    frontend:
+         image: mohamedaly89/jumia-phone-number-validator:validator-frontend-image
+         ports:
+            - 8081:8081

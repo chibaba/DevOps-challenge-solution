@@ -27,7 +27,8 @@ Your main goal is to create the infrastructure code to automate all the infrastr
 2) Database   
   a) Run the PostgreSQL service on a RDS  
   b) Create database: jumia_phone_validator  
-  c) Create database user (jumia) with secure password d) Grant privileges to read and write  
+  c) Create database user (jumia) with secure password  
+  d) Grant privileges to read and write  
 3) Microservice  
   a) Run the microservice jumia_phone_validator on a Docker container (take into account the requirements described in the README file).  
   b) Connect to the PostgreSQL database.  
@@ -57,7 +58,7 @@ Using the operating system firewall (e.g. iptables, ufw, etc):
 - Provision a Kubernetes cluster EKS or managed with: 
   - 3 Worker Nodes
   - 1 Node per Availability Zone
-Run the container inside the created Kubernetes cluster with: 
+- Run the container inside the created Kubernetes cluster with: 
   - 3 replicas, each assigned to a different node.
-Create a Jenkins server with a pipeline to deploy jumia_phone_validator.
-Use Helm as a package manager to Kubernetes.
+- Create a Jenkins server with a pipeline to deploy jumia_phone_validator.
+- Use Helm as a package manager to Kubernetes.

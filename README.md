@@ -22,15 +22,15 @@ Your main goal is to create the infrastructure code to automate all the infrastr
 - Firewall should deny all the incoming traffic and only expose the required ports to the internet (e.g. SSH port, HTTP port) 
 
 ## Servers Features
-1) Load-balancer 
+1) Load-balancer  
   a) Run a application load balancer to expose the microservice API via port 80 and 443
-2) Database 
-  a) Run the PostgreSQL service on a RDS 
-  b) Create database: jumia_phone_validator 
-  c) Create database user (jumia) with secure password d) Grant privileges to read and write 
-3) Microservice 
-  a) Run the microservice jumia_phone_validator on a Docker container (take into account the requirements described in the README file).
-  b) Connect to the PostgreSQL database.
+2) Database   
+  a) Run the PostgreSQL service on a RDS  
+  b) Create database: jumia_phone_validator  
+  c) Create database user (jumia) with secure password d) Grant privileges to read and write  
+3) Microservice  
+  a) Run the microservice jumia_phone_validator on a Docker container (take into account the requirements described in the README file).  
+  b) Connect to the PostgreSQL database.  
 
 ## Network configuration 
 Using the operating system firewall (e.g. iptables, ufw, etc): 

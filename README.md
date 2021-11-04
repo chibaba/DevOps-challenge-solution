@@ -29,6 +29,7 @@ Your main goal is to create the infrastructure code to automate all the infrastr
   b) Create database: jumia_phone_validator  
   c) Create database user (jumia) with secure password  
   d) Grant privileges to read and write  
+  e) Dump the SQL file "sample.sql" into the database
 3) Microservice  
   a) Run the microservice jumia_phone_validator on a Docker container (take into account the requirements described in the README file).  
   b) Connect to the PostgreSQL database.  

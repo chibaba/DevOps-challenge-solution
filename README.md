@@ -47,7 +47,7 @@ Using the operating system firewall (e.g. iptables, ufw, etc):
   b) Accept requests from the load-balancer IP addres
 
 ## Deliverables
-- A GitHub private git repository for the Ansible code with all the commits made during the development of this project 
+- A GitHub public git repository with all the code for the development of this project 
 - Ansible playbook to deploy the microservice 
 - Ansible playbook to deploy the PostgreSQL 
 - Ansible playbook to configure the servers firewalls

@@ -1,5 +1,5 @@
 BEGIN TRANSACTION;
-CREATE TABLEer (id int, name varchar(50), phone varchar(50));
+CREATE TABLE customer (id int, name varchar(50), phone varchar(50));
 INSERT INTO customer VALUES(0,'Walid Hammadi','(212) 6007989253');
 INSERT INTO customer VALUES(1,'Yosaf Karrouch','(212) 698054317');
 INSERT INTO customer VALUES(2,'Younes Boutikyad','(212) 6546545369');

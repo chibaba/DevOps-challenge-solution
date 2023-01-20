@@ -72,7 +72,7 @@ variable "eks_instance_type" {
 
 variable "key_name" {
   type    = string
-  default = "bashir"
+  default = "conyeoka"
 }
 
 variable "eks_cluster" {

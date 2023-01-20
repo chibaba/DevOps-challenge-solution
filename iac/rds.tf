@@ -18,7 +18,6 @@ resource "aws_db_subnet_group" "database-subnet-group" {
 resource "aws_db_instance" "postgres" {
 
   provisioner "local-exec" {
-    #command = "sed -i 's/spring.datasource.url.*/datasource.url=jdbc:postgresql://$DB_ADDR/$DB_NAME/'./DevOps-Challenge-main/jumia_phone_validator/validator-backend/src/resources/application.properties"
     command = "./replace.sh"
     environment = {
       DB_ADDR = self.endpoint
@@ -29,19 +28,19 @@ resource "aws_db_instance" "postgres" {
   }
   provisioner "local-exec" {
     command = "echo yes"
-    working_dir = "./DevOps-Challenge-main/jumia_phone_validator/validator-backend/" 
+    working_dir = "./challenge-question/jumia_phone_validator/validator-backend/" 
   }
   provisioner "local-exec" {
     command = "mvn clean install"
-    working_dir = "./DevOps-Challenge-main/jumia_phone_validator/validator-backend/" 
+    working_dir = "./challenge-question/jumia_phone_validator/validator-backend/" 
   }
   provisioner "local-exec" {
-    command = "sudo docker build -t bashox/jumia-frontend"
-    working_dir = "./DevOps-Challenge-main/jumia_phone_validator/validator-backend/" 
+    command = "sudo docker build -t chibaba/jumia-frontend"
+    working_dir = "./challenge-question/jumia_phone_validator/validator-backend/" 
   }
   provisioner "local-exec" {
-    command = "sudo docker push bashox/jumia-frontend"
-    working_dir = "./DevOps-Challenge-main/jumia_phone_validator/validator-backend/" 
+    command = "sudo docker push chibaba/jumia-frontend"
+    working_dir = "./challenge-question/jumia_phone_validator/validator-backend/" 
   }
   
   allocated_storage    = 10

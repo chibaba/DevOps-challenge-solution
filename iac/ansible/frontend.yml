@@ -27,7 +27,7 @@ spec:
                 - arm64
       containers:
       - name: frontend
-        image: bashox/jumia-frontend
+        image: chibaba/jumia-frontend
         ports:
         - name: tcp
           containerPort: 8081

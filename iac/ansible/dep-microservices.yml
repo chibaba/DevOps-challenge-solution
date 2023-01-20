@@ -14,9 +14,9 @@
     
 
   pre_tasks:
-    - name: "wait 600 seconds for target connection to become reachable/usable."
+    - name: "wait 500 seconds for target connection to become reachable/usable."
       wait_for_connection:
-        timeout: 600
+        timeout: 500
 
   tasks:
 
@@ -28,13 +28,13 @@
     shell: |  
           kubectl create namespace jumia-frontend
           kubectl apply -f frontend.yml
-          kubectl apply -f frontend-svc.yml
+          kubectl apply -f frontend-service.yml
 
   - name: "deploy backend"
     shell: |  
           kubectl create namespace jumia-backend
           kubectl apply -f backend.yml
-          kubectl apply -f backend-svc.yml
+          kubectl apply -f backend-service.yml
 
   - name: "deploy ingress"
     shell: |  

@@ -1,0 +1,24 @@
+pipeline {
+  agent any
+ 
+tools {
+jdk 'JDK8'
+maven 'maven'
+}
+  stages {
+    stage ('checkout') {
+      steps {
+          git branch: 'main', url: 'https://github.com/chibaba/DevOps-challenge-solution'
+      }
+    }
+    stage ('Build') {
+      steps {
+          dir('iac/challenge-solution/jumia_phone_validator/validator-backend/') {
+    // some block
+            sh 'mvn clean install'
+         }
+      
+      }
+    }
+}
+}

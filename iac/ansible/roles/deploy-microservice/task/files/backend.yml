@@ -33,7 +33,7 @@ spec:
                 - arm64
       containers:
       - name: backend
-        image: mohamedaly89/jumia-phone-number-validator:validator-backend-image ##variable
+        image: conyeoka/jumia-phone-number-validator:validator-backend-image ##variable
         ports:
         - name: tcp
           containerPort: 8080

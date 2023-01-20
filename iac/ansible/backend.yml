@@ -27,7 +27,7 @@ spec:
                 - arm64
       containers:
       - name: backend
-        image: bashox/jumia ##variable
+        image: chibaba/jumia ##variable
         ports:
         - name: tcp
           containerPort: 8080

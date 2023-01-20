@@ -1,19 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend
-  namespace: jumia-frontend
+  name: backend
+  namespace: jumia-backend
   labels:
-    app: frontend-label
+    app: backend-label
 spec:
+  # progressDeadlineSeconds: 3600
+  # strategy:
+  #   type: RollingUpdate
+  #   rollingUpdate:
+  #     maxUnavailable: 0
+  #     maxSurge: 1
   replicas: 3
   selector:
     matchLabels:
-      app: frontend-label
+      app: backend-label
   template:
     metadata:
       labels:
-        app: frontend-label
+        app: backend-label
     spec:
       affinity:
         nodeAffinity:
@@ -26,9 +32,8 @@ spec:
                 - amd64
                 - arm64
       containers:
-      - name: frontend
-        image: bashox/jumia-frontend
+      - name: backend
+        image: mohamedaly89/jumia-phone-number-validator:validator-backend-image ##variable
         ports:
         - name: tcp
-          containerPort: 8081
-
+          containerPort: 8080

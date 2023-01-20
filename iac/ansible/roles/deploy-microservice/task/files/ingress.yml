@@ -5,11 +5,10 @@ metadata:
   namespace: jumia-frontend
   annotations:
     kubernetes.io/ingress.class: alb
-    alb.ingress.kubernetes.io/scheme: internal
-    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 8081}]'
+    alb.ingress.kubernetes.io/scheme: internet-facing
 spec:
   defaultBackend:
     service:
-      name: localhostf
+      name: localhost
       port:
         number: 8081

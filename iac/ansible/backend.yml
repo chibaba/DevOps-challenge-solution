@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: jumia-frontend
+  labels:
+    app: backend-label
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: backend-label
+  template:
+    metadata:
+      labels:
+        app: backend-label
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/arch
+                operator: In
+                values:
+                - amd64
+                - arm64
+      containers:
+      - name: backend
+        image: bashox/jumia ##variable
+        ports:
+        - name: tcp
+          containerPort: 8080

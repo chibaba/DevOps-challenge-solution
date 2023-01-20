@@ -1,0 +1,76 @@
+---
+
+- name: "deploy microservices" 
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  
+  vars:
+    - ansible_python_interpreter: /usr/bin/python3
+    - ansible_host_key_checking: false
+    - ansible_stdout_callback: yaml
+    - ACCOUNT_ID: "jumia"
+    - CLUSTER_NAME: "jumia"
+    
+
+  pre_tasks:
+    - name: "wait 600 seconds for target connection to become reachable/usable."
+      wait_for_connection:
+        timeout: 600
+
+  tasks:
+
+  - name: "update kubeconfig"
+    shell: |  
+         aws eks update-kubeconfig --name eks --region eu-west-3
+
+  - name: "deploy frontend"
+    shell: |  
+          kubectl create namespace jumia-frontend
+          kubectl apply -f frontend.yml
+          kubectl apply -f frontend-svc.yml
+
+  - name: "deploy backend"
+    shell: |  
+          kubectl create namespace jumia-backend
+          kubectl apply -f backend.yml
+          kubectl apply -f backend-svc.yml
+
+  - name: "deploy ingress"
+    shell: |  
+          kubectl apply -f ingress.yml
+  
+  - name: "install aws load balancer controller"
+    shell: |  
+          eksctl utils associate-iam-oidc-provider \
+          --region eu-west-3 \
+          --cluster {{ CLUSTER_NAME }} \
+          --approve
+
+  - name: "create IAM Policy"
+    shell: |  
+          aws iam create-policy \
+            --policy-name AWSLoadBalancerControllerIAMPolicy \
+            --policy-document file://iam-policy.json
+    
+  
+  - name: "install aws load balancer controller"
+    shell: |  
+        eksctl create iamserviceaccount \
+          --cluster=eks \
+          --namespace=kube-system \
+          --name=aws-load-balancer-controller \
+          --attach-policy-arn=arn:aws:iam::{{ ACCOUNT_ID }}:policy/AWSLoadBalancerControllerIAMPolicy \
+          --approve
+    
+
+  - name: "install aws load balancer controller"
+    shell: |  
+          helm repo add eks https://aws.github.io/eks-charts
+          kubectl apply -k "github.com/aws/eks-charts/stable/aws-load-balancer-controller//crds?ref=master"
+          helm upgrade -i aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName={{ CLUSTER_NAME }} --set serviceAccount.create=false --set serviceAccount.name=aws-load-balancer-controller
+        
+
+
+
+          

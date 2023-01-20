@@ -1,0 +1,25 @@
+---
+
+- name: Create a k8s namespace
+  kubernetes.core.k8s:
+    name: '{{ item }}'
+    api_version: v1
+    kind: Namespace
+    state: present
+  with_items:
+    - jumia-backend
+    - jumia-frontend
+
+- name: "deploy frontend"
+  shell: |  
+        kubectl apply -f frontend.yml
+        kubectl apply -f frontend-service.yml
+
+- name: "deploy frontend"
+  shell: |  
+        kubectl apply -f backend.yml
+        kubectl apply -f backend-service.yml
+
+- name: "deploy frontend"
+  shell: |  
+        kubectl apply -f ingress.yml

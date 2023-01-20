@@ -6,6 +6,12 @@ metadata:
   labels:
     app: frontend-label
 spec:
+  # progressDeadlineSeconds: 3600
+  # strategy:
+  #   type: RollingUpdate
+  #   rollingUpdate:
+  #     maxUnavailable: 0
+  #     maxSurge: 1
   replicas: 3
   selector:
     matchLabels:
@@ -27,8 +33,7 @@ spec:
                 - arm64
       containers:
       - name: frontend
-        image: bashox/jumia-frontend
+        image: mohamedaly89/jumia-phone-number-validator:validator-frontend-image
         ports:
         - name: tcp
           containerPort: 8081
-

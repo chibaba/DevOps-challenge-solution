@@ -1,0 +1,46 @@
+- hosts: localhost
+  become: yes
+  gather_facts: no
+
+  vars:
+    - HOST: "a"
+    - PASSWORD: "b"
+    - USERNAME: "c"
+    - DB_NAME: "d"
+    - DB_USER: "e"
+    - DB_USER_PASS: "f"
+
+  tasks:
+
+  - name: Create postgres user for my app
+    become: yes
+    postgresql_user:
+      login_host : "{{ HOST }}"
+      login_password : "{{ PASSWORD }}"
+      login_user : "{{ USERNAME }}"
+      db: "{{ DB_NAME }}"
+      name: "{{ DB_USER }}"
+      password: "{{ DB_USER_PASS }}"
+
+  - name: Ensure we have access from the new user
+    become: yes
+    postgresql_privs:
+      login_host : "{{ HOST }}"
+      login_password : "{{ PASSWORD }}"
+      login_user : "{{ USERNAME }}"
+      db: "{{ DB_NAME }}"
+      role: "{{ DB_USER }}"
+      objs: ALL_IN_SCHEMA
+      privs: SELECT,INSERT,UPDATE,DELETE
+
+  - name: Run queries from SQL script
+    become: yes
+    postgresql_query:
+      login_host : "{{ HOST }}"
+      login_password : "{{ PASSWORD }}"
+      login_user : "{{ USERNAME }}"
+      db: "{{ DB_NAME }}"
+      path_to_script: ./database/sample.sql
+      positional_args:
+      - 1
+    ignore_errors: true

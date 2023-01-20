@@ -5,13 +5,13 @@ metadata:
   namespace: jumia-frontend
 spec:
   selector:    
-    app: backend-label
+    app: frontend-label
   type: NodePort
   ports:  
   - name: http
     port: 8081
     targetPort: 8081
-    nodePort: 30036
+    nodePort: 30035
     protocol: TCP
 
 

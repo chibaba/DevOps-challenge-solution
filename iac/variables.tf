@@ -94,3 +94,33 @@ variable "eks_capacity_type" {
   type    = string
   default = "ON_DEMAND"
 }
+
+variable "eks_node_group" {
+  type    = string
+  default = "eks-node-group-general"
+}
+
+variable "eks_iam_policy_attachment" {
+  type    = string
+  default = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
+}
+
+variable "eks_iam_cni_policy" {
+  type    = string
+  default = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+}
+
+variable "amazon_ec2_container_registry_read_only" {
+  type    = string
+  default = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+}
+
+variable "eks_node_group_name" {
+  type    = string
+  default = "node-general"
+}
+
+variable "account_id" {
+  type    = string
+  sensitive   = true
+}

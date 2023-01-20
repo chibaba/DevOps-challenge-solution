@@ -69,3 +69,28 @@ variable "eks_instance_type" {
   type    = string
   default = "t3.small"
 }
+
+variable "key_name" {
+  type    = string
+  default = "bashir"
+}
+
+variable "eks_cluster" {
+  type    = string
+  default = "eks"
+}
+
+variable "eks_version" {
+  type    = string
+  default = "1.19"
+}
+
+variable "eks_ami_type" {
+  type    = string
+  default = "AL2_x86_64"
+}
+
+variable "eks_capacity_type" {
+  type    = string
+  default = "ON_DEMAND"
+}

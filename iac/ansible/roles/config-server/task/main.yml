@@ -1,0 +1,44 @@
+---
+
+- name: "Installing ufw"
+  shell: |  
+      sudo yum update    
+      sudo amazon-linux-extras install epel
+      sudo yum install --enablerepo="epel" ufw
+  register: ufw-install
+
+- name: Allow all access to tcp port 80
+  become: yes
+  ufw:
+    rule: allow
+    port: '{{ item }}'
+    proto: tcp 
+  with_items:
+    - 80
+    - 443
+    - 1337
+
+- name: Setup alternate SSH port
+  become: yes
+  lineinfile:
+    dest: "/etc/ssh/sshd_config"
+    regexp: "^PermitRootLogin"
+    line: "PermitRootLogin no"
+
+- name: Setup alternate SSH port
+  become: yes
+  lineinfile:
+    dest: "/etc/ssh/sshd_config"
+    regexp: "^Port"
+    line: "Port 1337"
+  
+- name: Setup selinux for alternate SSH port
+  become: yes
+  shell: |
+    yum install policycoreutils-python.x86_64
+    semanage port -a -t ssh_port_t -p tcp 1337
+  notify: "Restart sshd"
+
+- name: Change ssh port to 1337
+  set_fact:
+    ansible_port: 1337

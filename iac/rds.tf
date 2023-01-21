@@ -18,9 +18,8 @@ resource "aws_db_subnet_group" "database-subnet-group" {
 resource "aws_db_instance" "postgres" {
 
   provisioner "local-exec" {
-    command = "sed -i 's/spring.datasource.url.*/datasource.url=jdbc:postgresql://$DB_ADDR/$DB_NAME/'./challenge-question/jumia_phone_validator/validator-backend/src/resources/application.properties"
 
-    # command = "./replace.sh"
+    command = "./replace.sh"
     environment = {
       DB_ADDR     = self.endpoint
       DB_NAME     = var.db_name

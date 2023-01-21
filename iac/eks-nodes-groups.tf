@@ -78,7 +78,7 @@ resource "aws_eks_node_group" "nodes_general" {
 
   provisioner "local-exec" {
     working_dir = "./ansible"
-    command     = "ansible-playbook deploy-microservices.yml --extra-vars='ACCOUNT_ID=$ACCOUNT_ID CLUSTER_NAME=$CLUSTER_NAME'"
+    command     = "deploy-microservices.yml --extra-vars='ACCOUNT_ID=$ACCOUNT_ID CLUSTER_NAME=$CLUSTER_NAME'"
     environment = {
       ACCOUNT_ID   = var.account_id
       CLUSTER_NAME = var.eks_cluster

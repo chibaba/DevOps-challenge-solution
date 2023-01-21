@@ -8,7 +8,7 @@ maven 'maven'
   stages {
     stage ('checkout') {
       steps {
-          git branch: 'main', url: 'https://github.com/chibaba/DevOps-challenge-solution'
+          git branch: 'master', url: 'https://github.com/chibaba/DevOps-challenge-solution'
       }
     }
     stage ('Build') {

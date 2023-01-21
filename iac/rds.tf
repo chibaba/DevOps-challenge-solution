@@ -1,15 +1,15 @@
 
 # RDS Postgres subnet group
 resource "aws_db_subnet_group" "database-subnet-group" {
-  name         = "database subnets"
+  name = "database subnets"
   subnet_ids = [
-      aws_subnet.private_1.id,
-      aws_subnet.private_2.id,
-      aws_subnet.private_3.id
-    ]
-  description  = "Subnets for Database Instance"
+    aws_subnet.private_1.id,
+    aws_subnet.private_2.id,
+    aws_subnet.private_3.id
+  ]
+  description = "Subnets for Database Instance"
 
-  tags   = {
+  tags = {
     Name = "Database Subnets"
   }
 }
@@ -18,42 +18,44 @@ resource "aws_db_subnet_group" "database-subnet-group" {
 resource "aws_db_instance" "postgres" {
 
   provisioner "local-exec" {
-    command = "./replace.sh"
+    command = "sed -i 's/spring.datasource.url.*/datasource.url=jdbc:postgresql://$DB_ADDR/$DB_NAME/'./challenge-question/jumia_phone_validator/validator-backend/src/resources/application.properties"
+
+    # command = "./replace.sh"
     environment = {
-      DB_ADDR = self.endpoint
-      DB_NAME = var.db_name
+      DB_ADDR     = self.endpoint
+      DB_NAME     = var.db_name
       DB_USERNAME = var.db_username
       DB_PASSWORD = var.db_password
     }
   }
   provisioner "local-exec" {
-    command = "echo yes"
-    working_dir = "./challenge-question/jumia_phone_validator/validator-backend/" 
+    command     = "echo yes"
+    working_dir = "./challenge-question/jumia_phone_validator/validator-backend/"
   }
   provisioner "local-exec" {
-    command = "mvn clean install"
-    working_dir = "./challenge-question/jumia_phone_validator/validator-backend/" 
+    command     = "mvn clean install"
+    working_dir = "./challenge-question/jumia_phone_validator/validator-backend/"
   }
   provisioner "local-exec" {
-    command = "sudo docker build -t chibaba/jumia-frontend"
-    working_dir = "./challenge-question/jumia_phone_validator/validator-backend/" 
+    command     = "sudo docker build -t chibaba/jumia-frontend"
+    working_dir = "./challenge-question/jumia_phone_validator/validator-backend/"
   }
   provisioner "local-exec" {
-    command = "sudo docker push chibaba/jumia-frontend"
-    working_dir = "./challenge-question/jumia_phone_validator/validator-backend/" 
+    command     = "sudo docker push chibaba/jumia-frontend"
+    working_dir = "./challenge-question/jumia_phone_validator/validator-backend/"
   }
-  
-  allocated_storage    = 10
-  engine               = var.db_engine
+
+  allocated_storage = 10
+  engine            = var.db_engine
   # engine_version       = "5.7"
-  instance_class       = var.db_instance_class
-  db_name               = var.db_name
-  db_subnet_group_name = aws_db_subnet_group.database-subnet-group.name
-  username             = var.db_username
-  password             = var.db_password
-  parameter_group_name = var.db_parameter_group
-  skip_final_snapshot  = true
-  vpc_security_group_ids  = [aws_security_group.allow-tcp.id]
+  instance_class         = var.db_instance_class
+  db_name                = var.db_name
+  db_subnet_group_name   = aws_db_subnet_group.database-subnet-group.name
+  username               = var.db_username
+  password               = var.db_password
+  parameter_group_name   = var.db_parameter_group
+  skip_final_snapshot    = true
+  vpc_security_group_ids = [aws_security_group.allow-tcp.id]
 }
 
 #Postgres RDS security group
@@ -71,43 +73,43 @@ resource "aws_security_group" "allow-tcp" {
 #Postgres RDS security group rule
 
 resource "aws_security_group_rule" "db-security-group-rule-allow-22" {
-  description              = "Allow port 22 nodes to communicate with control plane (all ports)"
-  from_port                = 22
-  protocol                 =  "tcp"
-  security_group_id        = aws_security_group.allow-tcp.id
-  cidr_blocks              = [aws_vpc.main.cidr_block]
-  to_port                  = 22
-  type                     = "ingress"
+  description       = "Allow port 22 nodes to communicate with control plane (all ports)"
+  from_port         = 22
+  protocol          = "tcp"
+  security_group_id = aws_security_group.allow-tcp.id
+  cidr_blocks       = [aws_vpc.main.cidr_block]
+  to_port           = 22
+  type              = "ingress"
 }
 
 #Postgres RDS security group rules
 
 resource "aws_security_group_rule" "db-security-group-rule-allow-1337" {
-  description              = "Allow port 1337 nodes to communicate with control plane (all ports)"
-  from_port                = 1337
-  protocol                 =  "tcp"
-  security_group_id        = aws_security_group.allow-tcp.id
-  cidr_blocks              = [aws_vpc.main.cidr_block]
-  to_port                  = 1337
-  type                     = "ingress"
+  description       = "Allow port 1337 nodes to communicate with control plane (all ports)"
+  from_port         = 1337
+  protocol          = "tcp"
+  security_group_id = aws_security_group.allow-tcp.id
+  cidr_blocks       = [aws_vpc.main.cidr_block]
+  to_port           = 1337
+  type              = "ingress"
 }
 
 resource "aws_security_group_rule" "db-security-group-rule-allow-5432" {
-  description              = "Allow port 1337 nodes to communicate with control plane (all ports)"
-  from_port                = 5432
-  protocol                 =  "tcp"
-  security_group_id        = aws_security_group.allow-tcp.id
-  cidr_blocks              = [aws_vpc.main.cidr_block]
-  to_port                  = 5432
-  type                     = "ingress"
+  description       = "Allow port 1337 nodes to communicate with control plane (all ports)"
+  from_port         = 5432
+  protocol          = "tcp"
+  security_group_id = aws_security_group.allow-tcp.id
+  cidr_blocks       = [aws_vpc.main.cidr_block]
+  to_port           = 5432
+  type              = "ingress"
 }
 
 resource "aws_security_group_rule" "outgoing" {
-  description              = "Allow all outgoing"
-  from_port                = 0
-  protocol                 = "-1"
-  security_group_id        = aws_security_group.allow-tcp.id
-  cidr_blocks              = [aws_vpc.main.cidr_block]
-  to_port                  = 0
-  type                     = "egress"
+  description       = "Allow all outgoing"
+  from_port         = 0
+  protocol          = "-1"
+  security_group_id = aws_security_group.allow-tcp.id
+  cidr_blocks       = [aws_vpc.main.cidr_block]
+  to_port           = 0
+  type              = "egress"
 }

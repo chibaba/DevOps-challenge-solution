@@ -1,17 +1,17 @@
 resource "aws_lb" "nlb" {
 
-  
+
 
   depends_on = [time_sleep.wait_120_seconds]
 
   name               = "nlb"
   internal           = false
   load_balancer_type = "network"
-  subnets            = [
-      aws_subnet.public_1.id,
-      aws_subnet.public_2.id,
-      aws_subnet.public_3.id
-    ]
+  subnets = [
+    aws_subnet.public_1.id,
+    aws_subnet.public_2.id,
+    aws_subnet.public_3.id
+  ]
 
   enable_deletion_protection = false
 
@@ -92,21 +92,21 @@ resource "time_sleep" "wait_120_seconds" {
 }
 
 resource "aws_lb_target_group_attachment" "nlb-attachment-8081" {
-  depends_on = [aws_lb.nlb]
+  depends_on       = [aws_lb.nlb]
   target_group_arn = aws_lb_target_group.front-end-allow-8081.arn
   target_id        = file("file")
   port             = 8081
 }
 
 resource "aws_lb_target_group_attachment" "nlb-attachment-443" {
-  depends_on = [aws_lb.nlb]
+  depends_on       = [aws_lb.nlb]
   target_group_arn = aws_lb_target_group.front-end-allow-443.arn
   target_id        = file("file")
   port             = 443
 }
 
 resource "aws_lb_target_group_attachment" "nlb-attachment-1337" {
-  depends_on = [aws_lb.nlb]
+  depends_on       = [aws_lb.nlb]
   target_group_arn = aws_lb_target_group.front-end-allow-1337.arn
   target_id        = file("instance")
   port             = 1337

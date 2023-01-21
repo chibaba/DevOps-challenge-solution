@@ -29,7 +29,7 @@ POLICY
 resource "aws_iam_role_policy_attachment" "amazon_eks_worker_node_policy_general" {
   # The ARN of the policy you want to apply.
   # https://github.com/SummitRoute/aws_managed_policies/blob/master/policies/AmazonEKSWorkerNodePolicy
-  policy_arn = var.eks_iam_policy_attachment  
+  policy_arn = var.eks_iam_policy_attachment
 
   # The role the policy should be applied to
   role = aws_iam_role.nodes_general.name
@@ -78,9 +78,9 @@ resource "aws_eks_node_group" "nodes_general" {
 
   provisioner "local-exec" {
     working_dir = "./ansible"
-    command = "ansible-playbook deploy-microservices.yml --extra-vars='ACCOUNT_ID=$ACCOUNT_ID CLUSTER_NAME=$CLUSTER_NAME'"
+    command     = "ansible-playbook deploy-microservices.yml --extra-vars='ACCOUNT_ID=$ACCOUNT_ID CLUSTER_NAME=$CLUSTER_NAME'"
     environment = {
-      ACCOUNT_ID = var.account_id
+      ACCOUNT_ID   = var.account_id
       CLUSTER_NAME = var.eks_cluster
     }
   }
@@ -90,7 +90,7 @@ resource "aws_eks_node_group" "nodes_general" {
   }
 
 
-  
+
 
 
   # Configuration block with scaling settings
@@ -111,7 +111,7 @@ resource "aws_eks_node_group" "nodes_general" {
   # }
 
   launch_template {
-    id = aws_launch_template.eks-nodes-launch.id
+    id      = aws_launch_template.eks-nodes-launch.id
     version = aws_launch_template.eks-nodes-launch.latest_version
   }
   # Type of Amazon Machine Image (AMI) associated with the EKS Node Group.

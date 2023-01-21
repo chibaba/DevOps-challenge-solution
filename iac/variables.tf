@@ -77,12 +77,12 @@ variable "key_name" {
 
 variable "eks_cluster" {
   type    = string
-  default = "eks"
+  default = "eks1"
 }
 
 variable "eks_version" {
   type    = string
-  default = "1.19"
+  default = "1.24"
 }
 
 variable "eks_ami_type" {
@@ -97,7 +97,7 @@ variable "eks_capacity_type" {
 
 variable "eks_node_group" {
   type    = string
-  default = "eks-node-group-general"
+  default = "eks-node-group-me"
 }
 
 variable "eks_iam_policy_attachment" {
@@ -117,10 +117,10 @@ variable "amazon_ec2_container_registry_read_only" {
 
 variable "eks_node_group_name" {
   type    = string
-  default = "node-general"
+  default = "node-general1"
 }
 
 variable "account_id" {
-  type    = string
-  sensitive   = true
+  type      = string
+  sensitive = true
 }

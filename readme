@@ -21,7 +21,7 @@ Set up AWS Infrastructure and Deploy Microservices with just one command.
  
 Make sure you have the prerequisites installed on your linux or unix system 
 
-* cd terraform
+* cd iac
 * terraform init
 * terraform apply  (input your database name and database password)
 * Endpoint get displayed in the console output.
